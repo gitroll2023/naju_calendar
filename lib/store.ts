@@ -267,32 +267,6 @@ function createSampleEventsData(): Event[] {
       createdAt: new Date(),
       updatedAt: new Date(),
     },
-    {
-      id: generateId(),
-      title: '청년부 모임',
-      date: new Date(today.getTime() + 1 * 24 * 60 * 60 * 1000),
-      startTime: '14:00',
-      endTime: '16:00',
-      category: 'youth',
-      description: '청년부 정기 모임 및 성경공부',
-      location: '청년부실',
-      isAllDay: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: generateId(),
-      title: '장년부 성경공부',
-      date: new Date(today.getTime() + 3 * 24 * 60 * 60 * 1000),
-      startTime: '10:00',
-      endTime: '11:30',
-      category: 'adult',
-      description: '장년부 정기 성경공부',
-      location: '장년부실',
-      isAllDay: false,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    }
   ];
 }
 
