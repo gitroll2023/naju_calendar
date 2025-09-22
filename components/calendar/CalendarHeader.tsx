@@ -108,7 +108,7 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
 
           {/* 네비게이션 컨트롤 */}
           <div className="flex items-center space-x-2">
-            {/* 월 전체 삭제 버튼 */}
+            {/* 월 전체 삭제 버튼 - 월간 보기에서만 표시 */}
             {viewMode === 'month' && currentMonthEventCount > 0 && (
               <button
                 onClick={() => setShowDeleteConfirm(true)}
@@ -118,8 +118,8 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
                 <TrashIcon className="w-5 h-5 text-white" />
               </button>
             )}
-            {/* CSV 다운로드 버튼 */}
-            {onDownloadCSV && (
+            {/* CSV 다운로드 버튼 - 월간 보기에서만 표시 */}
+            {viewMode === 'month' && onDownloadCSV && (
               <button
                 onClick={onDownloadCSV}
                 className="flex items-center justify-center w-9 h-9 rounded-full bg-blue-600 hover:bg-blue-700 transition-colors"
@@ -128,8 +128,8 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
                 <ArrowDownTrayIcon className="w-5 h-5 text-white" />
               </button>
             )}
-            {/* 엑셀 업로드 버튼 */}
-            {onExcelUpload && (
+            {/* 엑셀 업로드 버튼 - 월간 보기에서만 표시 */}
+            {viewMode === 'month' && onExcelUpload && (
               <button
                 onClick={onExcelUpload}
                 className="flex items-center justify-center w-9 h-9 rounded-full bg-green-600 hover:bg-green-700 transition-colors"

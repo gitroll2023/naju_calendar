@@ -165,8 +165,8 @@ export const CHURCH_CATEGORIES = {
     icon: '🗺️'
   },
   church: {
-    label: '기타 교회',
-    color: '#60A5FA',      // 연한 파란색 - 기타 교회 일정
+    label: '교회',
+    color: '#60A5FA',      // 연한 파란색 - 교회 일정
     lightColor: '#DBEAFE',
     textColor: '#2563EB',
     icon: '✝️'
