@@ -19,6 +19,8 @@ export default function AuthPage({ onAuthSuccess }: AuthPageProps) {
     setError('');
     setLoading(true);
 
+    console.log('AuthPage - Submitting password:', password);
+
     try {
       const response = await fetch('/api/auth', {
         method: 'POST',
@@ -28,18 +30,23 @@ export default function AuthPage({ onAuthSuccess }: AuthPageProps) {
         body: JSON.stringify({ password }),
       });
 
+      console.log('AuthPage - Response status:', response.status);
       const data = await response.json();
+      console.log('AuthPage - Response data:', data);
 
       if (response.ok && data.success) {
         // 인증 성공
+        console.log('AuthPage - Authentication successful');
         onAuthSuccess();
       } else {
         // 인증 실패
+        console.log('AuthPage - Authentication failed:', data.error);
         setError(data.error || '비밀번호가 일치하지 않습니다.');
         // 입력 필드 초기화
         setPassword('');
       }
-    } catch {
+    } catch (error) {
+      console.error('AuthPage - Request error:', error);
       setError('서버 연결 오류가 발생했습니다.');
     } finally {
       setLoading(false);

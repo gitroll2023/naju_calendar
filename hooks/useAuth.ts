@@ -9,12 +9,15 @@ export function useAuth() {
   // 인증 상태 확인
   const checkAuth = async () => {
     try {
+      console.log('useAuth - Checking authentication status');
       const response = await fetch('/api/auth', {
         method: 'GET',
       });
       const data = await response.json();
+      console.log('useAuth - Auth check response:', data);
       setIsAuthenticated(data.authenticated);
     } catch (error) {
+      console.error('useAuth - Auth check error:', error);
       setIsAuthenticated(false);
     } finally {
       setLoading(false);

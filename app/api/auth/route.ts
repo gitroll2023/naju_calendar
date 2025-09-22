@@ -9,7 +9,12 @@ export async function POST(request: NextRequest) {
     // 환경변수에서 비밀번호 가져오기 (서버 사이드에서만 접근 가능)
     const correctPassword = process.env.APP_PASSWORD;
 
+    console.log('Auth API - Received password:', password);
+    console.log('Auth API - Correct password exists:', !!correctPassword);
+    console.log('Auth API - Password match:', password === correctPassword);
+
     if (!correctPassword) {
+      console.log('Auth API - No APP_PASSWORD environment variable found');
       return NextResponse.json(
         { error: '서버 설정 오류' },
         { status: 500 }
@@ -30,6 +35,7 @@ export async function POST(request: NextRequest) {
         path: '/',
       });
 
+      console.log('Auth API - Cookie set successfully');
       return NextResponse.json({ success: true });
     } else {
       return NextResponse.json(

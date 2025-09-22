@@ -23,6 +23,7 @@ export default function Home() {
 
   // 인증 성공 핸들러
   const handleAuthSuccess = () => {
+    console.log('page.tsx - Auth success, checking auth status');
     checkAuth(); // 인증 상태 다시 확인
   };
 
