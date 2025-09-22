@@ -64,7 +64,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      church_category: 'church' | 'adult' | 'youth' | 'advisory' | 'women' | 'student' | 'children'
+      church_category: 'worship' | 'celebration' | 'theology' | 'admin' | 'education' | 'evangelism' | 'service' | 'regional' | 'church' | 'adult' | 'women' | 'youth' | 'advisory' | 'children' | 'student'
       recurring_type: 'daily' | 'weekly' | 'monthly' | 'yearly'
     }
   }

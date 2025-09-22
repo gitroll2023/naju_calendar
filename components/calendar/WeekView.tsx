@@ -114,78 +114,86 @@ export default function WeekView() {
 
   return (
     <div className="bg-white">
-      {/* 주간 헤더 */}
-      <div className="grid grid-cols-7 border-b border-gray-200">
-        {weekDays.map((day, index) => (
-          <div key={index} className="p-3 text-center border-r border-gray-100 last:border-r-0">
-            <div className="text-xs text-gray-600 mb-1">
-              {WEEK_DAYS[index]}
-            </div>
-            <button
-              onClick={() => handleDateClick(day)}
-              className={`w-8 h-8 rounded-full text-sm font-medium transition-colors ${
-                isToday(day)
-                  ? 'bg-blue-600 text-white'
-                  : selectedDate && isSameDay(day, selectedDate)
-                  ? 'bg-blue-100 text-blue-800'
-                  : 'text-gray-900 hover:bg-gray-100'
-              }`}
-            >
-              {format(day, 'd')}
-            </button>
-          </div>
-        ))}
-      </div>
-
-      {/* 시간대별 일정 표시 */}
-      <div className="grid grid-cols-7">
+      {/* 세로 레이아웃: 요일별 일정 표시 */}
+      <div className="space-y-1 p-2">
         {weekDays.map((day, dayIndex) => {
           const dayEvents = getEventsForDate(day);
+          const isTodayDate = isToday(day);
+          const isSelectedDate = selectedDate && isSameDay(day, selectedDate);
 
           return (
-            <div key={dayIndex} className="border-r border-gray-100 last:border-r-0 min-h-[400px] p-2">
-              {/* 종일 일정 */}
-              {dayEvents
-                .filter(event => event.isAllDay)
-                .map((event) => (
-                  <div
-                    key={event.id}
-                    className="mb-1 p-1 rounded text-xs font-medium text-white truncate cursor-pointer touch-manipulation"
-                    style={{ backgroundColor: getCategoryInfo(event.category).color }}
-                    onClick={() => handleEventClick(event)}
-                  >
-                    {event.title}
-                  </div>
-                ))}
+            <div key={dayIndex} className="flex items-start space-x-3 py-2 border-b border-gray-100 last:border-b-0">
+              {/* 요일 및 날짜 */}
+              <div className="flex-shrink-0 w-20 text-center">
+                <button
+                  onClick={() => handleDateClick(day)}
+                  className={`w-12 h-12 rounded-full text-sm font-medium transition-colors mb-1 ${
+                    isTodayDate
+                      ? 'bg-blue-600 text-white'
+                      : isSelectedDate
+                      ? 'bg-blue-100 text-blue-800'
+                      : 'text-gray-900 hover:bg-gray-100'
+                  }`}
+                >
+                  {format(day, 'd')}
+                </button>
+                <div className="text-xs text-gray-600 font-medium">
+                  {WEEK_DAYS[dayIndex]}
+                </div>
+              </div>
 
-              {/* 시간 일정 */}
-              {dayEvents
-                .filter(event => !event.isAllDay)
-                .sort((a, b) => {
-                  if (!a.startTime || !b.startTime) return 0;
-                  return a.startTime.localeCompare(b.startTime);
-                })
-                .map((event) => (
-                  <div
-                    key={event.id}
-                    className="mb-1 p-1 rounded text-xs cursor-pointer border-l-2 touch-manipulation"
-                    style={{
-                      borderLeftColor: getCategoryInfo(event.category).color,
-                      backgroundColor: getCategoryInfo(event.category).lightColor
-                    }}
-                    onClick={() => handleEventClick(event)}
-                  >
-                    <div className="font-medium text-gray-900 truncate">
-                      {event.title}
-                    </div>
-                    {event.startTime && (
-                      <div className="text-gray-600">
-                        {event.startTime}
-                        {event.endTime && ` - ${event.endTime}`}
-                      </div>
-                    )}
+              {/* 일정 목록 */}
+              <div className="flex-1 min-h-[60px]">
+                {dayEvents.length === 0 ? (
+                  <div className="text-gray-400 text-sm py-2">일정 없음</div>
+                ) : (
+                  <div className="space-y-1">
+                    {dayEvents
+                      .sort((a, b) => {
+                        // 종일 일정을 먼저, 그 다음 시간 순으로 정렬
+                        if (a.isAllDay && !b.isAllDay) return -1;
+                        if (!a.isAllDay && b.isAllDay) return 1;
+                        if (!a.startTime || !b.startTime) return 0;
+                        return a.startTime.localeCompare(b.startTime);
+                      })
+                      .map((event) => (
+                        <div
+                          key={event.id}
+                          className="flex items-center space-x-2 p-2 rounded-lg cursor-pointer touch-manipulation hover:bg-gray-50"
+                          onClick={() => handleEventClick(event)}
+                        >
+                          {/* 카테고리 색상 표시 */}
+                          <div
+                            className="w-3 h-3 rounded-full flex-shrink-0"
+                            style={{ backgroundColor: getCategoryInfo(event.category).color }}
+                          />
+                          
+                          {/* 일정 정보 */}
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium text-gray-900 truncate text-sm">
+                              {event.title}
+                            </div>
+                            {!event.isAllDay && event.startTime && (
+                              <div className="text-xs text-gray-500">
+                                {event.startTime}
+                                {event.endTime && ` - ${event.endTime}`}
+                              </div>
+                            )}
+                            {/* 디버깅용 - 나중에 제거 */}
+                            {!event.isAllDay && !event.startTime && (
+                              <div className="text-xs text-red-500">
+                                시간 정보 없음 (종일 아님)
+                              </div>
+                            )}
+                            {event.isAllDay && (
+                              <div className="text-xs text-gray-500">종일</div>
+                            )}
+                          </div>
+                        </div>
+                      ))}
                   </div>
-                ))}
+                )}
+              </div>
             </div>
           );
         })}

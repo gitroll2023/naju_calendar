@@ -27,7 +27,7 @@ export default function CalendarDay({ day }: CalendarDayProps) {
     <div
       onClick={handleClick}
       className={cn(
-        'relative flex flex-col items-center justify-start p-2 min-h-[80px] cursor-pointer transition-all duration-200 touch-manipulation',
+        'relative flex flex-col items-center justify-start p-1 min-h-[100px] cursor-pointer transition-all duration-200 touch-manipulation',
         'border-r border-b border-gray-100 hover:bg-gray-50 active:bg-gray-100',
         {
           'bg-blue-50 border-blue-200': isSelected && !day.isToday,
@@ -37,7 +37,7 @@ export default function CalendarDay({ day }: CalendarDayProps) {
     >
       {/* 날짜 숫자 */}
       <div className={cn(
-        'flex items-center justify-center w-10 h-10 text-base font-medium rounded-full mb-1 transition-all duration-200',
+        'flex items-center justify-center w-8 h-8 text-sm font-medium rounded-full mb-1 transition-all duration-200',
         {
           // 오늘 날짜
           'bg-blue-600 text-white font-bold shadow-md': day.isToday,

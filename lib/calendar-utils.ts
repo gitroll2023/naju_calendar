@@ -170,6 +170,48 @@ export const CHURCH_CATEGORIES = {
     lightColor: '#DBEAFE',
     textColor: '#2563EB',
     icon: '✝️'
+  },
+  adult: {
+    label: '장년회',
+    color: '#1E40AF',      // 진한 파란색 - 장년회
+    lightColor: '#DBEAFE',
+    textColor: '#1E3A8A',
+    icon: '👥'
+  },
+  women: {
+    label: '부녀회',
+    color: '#EC4899',      // 분홍색 - 부녀회
+    lightColor: '#FCE7F3',
+    textColor: '#BE185D',
+    icon: '👩'
+  },
+  youth: {
+    label: '청년회',
+    color: '#0891B2',      // 청록색 - 청년회
+    lightColor: '#CFFAFE',
+    textColor: '#0E7490',
+    icon: '👨‍💼'
+  },
+  advisory: {
+    label: '자문회',
+    color: '#7C3AED',      // 보라색 - 자문회
+    lightColor: '#EDE9FE',
+    textColor: '#5B21B6',
+    icon: '💼'
+  },
+  children: {
+    label: '유년회',
+    color: '#EAB308',      // 노란색 - 유년회
+    lightColor: '#FEF3C7',
+    textColor: '#A16207',
+    icon: '👶'
+  },
+  student: {
+    label: '학생회',
+    color: '#059669',      // 초록색 - 학생회
+    lightColor: '#D1FAE5',
+    textColor: '#065F46',
+    icon: '🎓'
   }
 } as const;
 

@@ -7,7 +7,13 @@ export type ChurchCategory =
   | 'evangelism'   // 전도부 (빨간색 계열)
   | 'service'      // 봉사/홍보 (노란색 계열)
   | 'regional'     // 나주지역회의 (청록색 계열)
-  | 'church';      // 기타 교회 일정 (기본 파란색)
+  | 'church'       // 기타 교회 일정 (기본 파란색)
+  | 'adult'        // 장년회 (진한 파란색)
+  | 'women'        // 부녀회 (분홍색)
+  | 'youth'        // 청년회 (청록색)
+  | 'advisory'     // 자문회 (보라색)
+  | 'children'     // 유년회 (노란색)
+  | 'student';     // 학생회 (초록색)
 
 export interface Event {
   id: string;
