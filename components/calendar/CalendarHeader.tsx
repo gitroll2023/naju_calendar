@@ -15,6 +15,8 @@ interface CalendarHeaderProps {
 export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: CalendarHeaderProps) {
   const { currentDate, setCurrentDate, viewMode, deleteMonthEvents, events } = useCalendarStore();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteInput, setDeleteInput] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
 
   // 현재 월의 일정 수 계산
   const currentMonthEventCount = events.filter(event => {
@@ -24,9 +26,26 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
   }).length;
 
   const handleDeleteMonth = async () => {
-    await deleteMonthEvents(currentDate.getFullYear(), currentDate.getMonth());
+    if (deleteInput !== '삭제') {
+      return; // 입력이 올바르지 않으면 아무것도 하지 않음
+    }
+
+    setIsDeleting(true);
+    try {
+      await deleteMonthEvents(currentDate.getFullYear(), currentDate.getMonth());
+      setShowDeleteConfirm(false);
+      setDeleteInput('');
+      // Toast 메시지는 CalendarContainer에서 처리하도록 할 수도 있음
+    } catch (error) {
+      console.error('Delete failed:', error);
+    } finally {
+      setIsDeleting(false);
+    }
+  };
+
+  const handleCloseDeleteConfirm = () => {
     setShowDeleteConfirm(false);
-    // Toast 메시지는 CalendarContainer에서 처리하도록 할 수도 있음
+    setDeleteInput('');
   };
 
   const handlePrevious = () => {
@@ -170,7 +189,7 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
       {/* 월 전체 삭제 확인 모달 */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 z-60 flex items-center justify-center">
-          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={() => setShowDeleteConfirm(false)} />
+          <div className="fixed inset-0 bg-black bg-opacity-50" onClick={handleCloseDeleteConfirm} />
           <div className="relative bg-white rounded-lg p-6 max-w-md w-full mx-4">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">
               {format(currentDate, 'yyyy년 M월', { locale: ko })} 전체 삭제
@@ -181,18 +200,40 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
             <p className="text-xs text-red-600 mb-4">
               ⚠️ 이 작업은 되돌릴 수 없습니다.
             </p>
+            
+            {/* 삭제 확인 입력 필드 */}
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                정말 삭제하려면 <span className="text-red-600 font-bold">"삭제"</span>를 입력해주세요
+              </label>
+              <input
+                type="text"
+                value={deleteInput}
+                onChange={(e) => setDeleteInput(e.target.value)}
+                placeholder="삭제"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                autoFocus
+              />
+            </div>
+
             <div className="flex justify-end space-x-3">
               <button
-                onClick={() => setShowDeleteConfirm(false)}
+                onClick={handleCloseDeleteConfirm}
                 className="px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                disabled={isDeleting}
               >
                 취소
               </button>
               <button
                 onClick={handleDeleteMonth}
-                className="px-4 py-2 bg-red-600 text-white hover:bg-red-700 rounded-lg transition-colors"
+                disabled={deleteInput !== '삭제' || isDeleting}
+                className={`px-4 py-2 rounded-lg transition-colors ${
+                  deleteInput === '삭제' && !isDeleting
+                    ? 'bg-red-600 text-white hover:bg-red-700'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
               >
-                전체 삭제
+                {isDeleting ? '삭제 중...' : '전체 삭제'}
               </button>
             </div>
           </div>
