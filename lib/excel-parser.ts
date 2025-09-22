@@ -486,8 +486,8 @@ export function parseExcelToEvents(file: File): Promise<ParsedEvent[]> {
         if (uniqueEvents.length === 0) {
           console.error('❌ 일정을 찾을 수 없습니다:', {
             날짜수: Object.keys(dateMapping).length,
-            데이터행수: jsonData.length,
-            첫5행: jsonData.slice(0, 5)
+            셀값수: Object.keys(cellValues).length,
+            시트범위: worksheet['!ref']
           });
         }
 
