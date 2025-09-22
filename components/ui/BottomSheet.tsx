@@ -59,30 +59,6 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
     setDragY(0);
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging) return;
-    
-    const deltaY = e.clientY - startY;
-    
-    // 아래로만 드래그 허용
-    if (deltaY > 0) {
-      setDragY(deltaY);
-    }
-  };
-
-  const handleMouseUp = () => {
-    if (!isDragging) return;
-    
-    setIsDragging(false);
-    
-    // 드래그 거리가 100px 이상이면 닫기
-    if (dragY > 100) {
-      onClose();
-    } else {
-      // 원래 위치로 되돌리기
-      setDragY(0);
-    }
-  };
 
   useEffect(() => {
     if (isOpen) {

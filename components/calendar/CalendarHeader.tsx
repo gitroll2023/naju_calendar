@@ -204,7 +204,7 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
             {/* 삭제 확인 입력 필드 */}
             <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                정말 삭제하려면 <span className="text-red-600 font-bold">"삭제"</span>를 입력해주세요
+                정말 삭제하려면 <span className="text-red-600 font-bold">&quot;삭제&quot;</span>를 입력해주세요
               </label>
               <input
                 type="text"
