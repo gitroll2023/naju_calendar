@@ -61,7 +61,8 @@ export function parseExcelSerialDate(serial: number, defaultYear?: number): Date
  * Excel에서 직접 날짜 타입으로 들어오는 경우
  */
 export function parseExcelDateCell(cellValue: unknown, defaultYear?: number): Date {
-  const date = new Date(cellValue);
+  // cellValue를 Date 생성자가 받을 수 있는 타입으로 변환
+  const date = new Date(cellValue as string | number | Date);
 
   // defaultYear가 제공되면 해당 연도로 설정
   if (defaultYear) {
