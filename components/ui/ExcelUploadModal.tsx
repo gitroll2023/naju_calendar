@@ -5,6 +5,7 @@ import { XMarkIcon, DocumentArrowUpIcon, CheckCircleIcon, ExclamationTriangleIco
 import { parseExcelToEvents, convertToCalendarEvents } from '@/lib/excel-parser';
 import { useCalendarStore } from '@/lib/store';
 import { format } from 'date-fns';
+import { ko } from 'date-fns/locale';
 import type { Event } from '@/types/calendar';
 import { CHURCH_CATEGORIES } from '@/lib/calendar-utils';
 
