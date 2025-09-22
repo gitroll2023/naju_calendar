@@ -19,6 +19,7 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
 
   // 드래그 이벤트 핸들러들
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.preventDefault(); // 기본 터치 동작 방지
     setIsDragging(true);
     setStartY(e.touches[0].clientY);
     setDragY(0);
@@ -79,7 +80,7 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
     };
   }, [isOpen]);
 
-  // 드래그 중일 때 전역 마우스 이벤트 리스너 추가
+  // 드래그 중일 때 전역 이벤트 리스너 추가
   useEffect(() => {
     if (isDragging) {
       const handleGlobalMouseMove = (e: MouseEvent) => {
@@ -98,12 +99,35 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
         }
       };
 
+      const handleGlobalTouchMove = (e: TouchEvent) => {
+        e.preventDefault(); // 브라우저 새로고침 제스처 방지
+        if (e.touches.length === 1) {
+          const deltaY = e.touches[0].clientY - startY;
+          if (deltaY > 0) {
+            setDragY(deltaY);
+          }
+        }
+      };
+
+      const handleGlobalTouchEnd = () => {
+        setIsDragging(false);
+        if (dragY > 100) {
+          onClose();
+        } else {
+          setDragY(0);
+        }
+      };
+
       document.addEventListener('mousemove', handleGlobalMouseMove);
       document.addEventListener('mouseup', handleGlobalMouseUp);
+      document.addEventListener('touchmove', handleGlobalTouchMove, { passive: false });
+      document.addEventListener('touchend', handleGlobalTouchEnd);
 
       return () => {
         document.removeEventListener('mousemove', handleGlobalMouseMove);
         document.removeEventListener('mouseup', handleGlobalMouseUp);
+        document.removeEventListener('touchmove', handleGlobalTouchMove);
+        document.removeEventListener('touchend', handleGlobalTouchEnd);
       };
     }
   }, [isDragging, startY, dragY, onClose]);
@@ -137,6 +161,7 @@ export default function BottomSheet({ isOpen, onClose, children, title }: Bottom
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
           onMouseDown={handleMouseDown}
+          style={{ touchAction: 'none' }}
         >
           <div className="w-10 h-1 bg-gray-300 rounded-full" />
         </div>
