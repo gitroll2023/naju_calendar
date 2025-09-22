@@ -25,7 +25,7 @@ export default function WeekView() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [deletingEvent, setDeletingEvent] = useState<Event | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [toast, setToast] = useState({ isVisible: false, message: '', type: 'success' as const });
+  const [toast, setToast] = useState<{ isVisible: boolean; message: string; type: 'success' | 'error' }>({ isVisible: false, message: '', type: 'success' });
 
   // 현재 날짜가 포함된 주의 시작과 끝
   const weekStart = startOfWeek(currentDate, { weekStartsOn: 0 }); // 일요일 시작

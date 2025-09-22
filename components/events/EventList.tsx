@@ -17,7 +17,7 @@ interface EventListProps {
 }
 
 export default function EventList({ events, selectedDate, onAddEvent, onEdit, onDelete }: EventListProps) {
-  const [toast, setToast] = useState({ isVisible: false, message: '', type: 'success' as const });
+  const [toast, setToast] = useState<{ isVisible: boolean; message: string; type: 'success' | 'error' }>({ isVisible: false, message: '', type: 'success' });
 
   const showToast = (message: string, type: 'success' | 'error' = 'success') => {
     setToast({ isVisible: true, message, type });

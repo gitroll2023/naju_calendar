@@ -39,7 +39,7 @@ export default function CalendarContainer() {
   const [deletingEvent, setDeletingEvent] = useState<Event | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isExcelUploadOpen, setIsExcelUploadOpen] = useState(false);
-  const [toast, setToast] = useState({ isVisible: false, message: '', type: 'success' as const });
+  const [toast, setToast] = useState<{ isVisible: boolean; message: string; type: 'success' | 'error' }>({ isVisible: false, message: '', type: 'success' });
 
   // 선택된 날짜가 변경될 때 하단 시트 열기
   useEffect(() => {
