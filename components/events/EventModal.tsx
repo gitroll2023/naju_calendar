@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 import { XMarkIcon, CalendarDaysIcon, ClockIcon, MapPinIcon, DocumentTextIcon } from '@heroicons/react/24/outline';
-import type { Event, ChurchCategory } from '@/types/calendar';
+import type { ChurchCategory } from '@/types/calendar';
 import { useCalendarStore } from '@/lib/store';
-import { CHURCH_CATEGORIES, getCategoryInfo } from '@/lib/calendar-utils';
+import { CHURCH_CATEGORIES } from '@/lib/calendar-utils';
 
 interface EventModalProps {
   isOpen: boolean;
@@ -117,7 +116,7 @@ export default function EventModal({ isOpen, onClose, selectedDate, onSuccess, o
       if (onSuccess) {
         onSuccess('일정이 추가되었습니다! ✅');
       }
-    } catch (error) {
+    } catch {
       if (onSuccess) {
         onSuccess('일정 추가에 실패했습니다. 다시 시도해주세요.');
       }

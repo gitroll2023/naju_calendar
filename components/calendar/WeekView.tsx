@@ -9,10 +9,8 @@ import {
   eachDayOfInterval,
   format,
   isSameDay,
-  isToday,
-  addDays
+  isToday
 } from 'date-fns';
-import { ko } from 'date-fns/locale';
 import type { Event } from '@/types/calendar';
 import EventDetailModal from '../ui/EventDetailModal';
 import EditEventModal from '../ui/EditEventModal';
@@ -82,7 +80,7 @@ export default function WeekView() {
     try {
       await updateEvent(updatedEvent.id, updatedEvent);
       showToast('일정이 수정되었습니다! ✅', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 수정에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
@@ -95,7 +93,7 @@ export default function WeekView() {
     try {
       await deleteEvent(event.id);
       showToast('일정이 삭제되었습니다! 🗑️', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 삭제에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };

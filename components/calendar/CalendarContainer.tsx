@@ -1,6 +1,6 @@
 'use client';
 
-import { CalendarIcon, Squares2X2Icon, ViewColumnsIcon, DocumentArrowUpIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
+import { CalendarIcon, Squares2X2Icon, ViewColumnsIcon } from '@heroicons/react/24/outline';
 import { CalendarIcon as CalendarSolidIcon, Squares2X2Icon as Squares2X2SolidIcon, ViewColumnsIcon as ViewColumnsSolidIcon } from '@heroicons/react/24/solid';
 import CalendarHeader from './CalendarHeader';
 import CalendarGrid from './CalendarGrid';
@@ -82,7 +82,7 @@ export default function CalendarContainer() {
     try {
       await updateEvent(updatedEvent.id, updatedEvent);
       showToast('일정이 수정되었습니다! ✅', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 수정에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
@@ -95,7 +95,7 @@ export default function CalendarContainer() {
     try {
       await deleteEvent(event.id);
       showToast('일정이 삭제되었습니다! 🗑️', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 삭제에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
@@ -126,9 +126,8 @@ export default function CalendarContainer() {
       const filename = generateCSVFilename(events);
       downloadCSV(csvContent, filename);
       showToast(`${events.length}개의 일정을 다운로드했습니다.`, 'success');
-    } catch (error) {
+    } catch {
       showToast('CSV 다운로드 중 오류가 발생했습니다.', 'error');
-      console.error('CSV 다운로드 오류:', error);
     }
   };
 

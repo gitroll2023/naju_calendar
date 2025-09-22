@@ -3,8 +3,7 @@
 import { useState } from 'react';
 import { useCalendarStore } from '@/lib/store';
 import { getCategoryInfo, formatTime } from '@/lib/calendar-utils';
-import { format, isSameDay } from 'date-fns';
-import { ko } from 'date-fns/locale';
+import { isSameDay } from 'date-fns';
 import { ClockIcon, MapPinIcon, DocumentDuplicateIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import type { Event } from '@/types/calendar';
 import Toast from '../ui/Toast';
@@ -91,7 +90,7 @@ export default function DayView() {
     try {
       await updateEvent(updatedEvent.id, updatedEvent);
       showToast('일정이 수정되었습니다! ✅', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 수정에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };
@@ -104,7 +103,7 @@ export default function DayView() {
     try {
       await deleteEvent(event.id);
       showToast('일정이 삭제되었습니다! 🗑️', 'success');
-    } catch (error) {
+    } catch {
       showToast('일정 삭제에 실패했습니다. 다시 시도해주세요.', 'error');
     }
   };

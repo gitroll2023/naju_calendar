@@ -5,7 +5,6 @@ import type { Event, ChurchCategory } from '@/types/calendar';
 import { CHURCH_CATEGORIES } from '@/lib/calendar-utils';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 
 interface EditEventModalProps {
   event: Event | null;
@@ -111,7 +110,7 @@ export default function EditEventModal({ event, isOpen, onClose, onSave, onCance
 
       await onSave(updatedEvent);
       onClose();
-    } catch (error) {
+    } catch {
       // 에러는 부모 컴포넌트에서 처리
     } finally {
       setIsSubmitting(false);

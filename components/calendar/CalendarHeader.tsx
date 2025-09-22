@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { ChevronLeftIcon, ChevronRightIcon, CalendarDaysIcon, DocumentArrowUpIcon, TrashIcon, ArrowDownTrayIcon } from '@heroicons/react/24/outline';
 import { useCalendarStore } from '@/lib/store';
-import { formatMonthYear, getNextMonth, getPreviousMonth } from '@/lib/calendar-utils';
+import { getNextMonth, getPreviousMonth } from '@/lib/calendar-utils';
 import { addDays, subDays, addWeeks, subWeeks, format, startOfWeek, endOfWeek } from 'date-fns';
 import { ko } from 'date-fns/locale';
 
@@ -24,7 +24,7 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
   }).length;
 
   const handleDeleteMonth = async () => {
-    const deletedCount = await deleteMonthEvents(currentDate.getFullYear(), currentDate.getMonth());
+    await deleteMonthEvents(currentDate.getFullYear(), currentDate.getMonth());
     setShowDeleteConfirm(false);
     // Toast 메시지는 CalendarContainer에서 처리하도록 할 수도 있음
   };

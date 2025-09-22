@@ -5,8 +5,7 @@ import { XMarkIcon, DocumentArrowUpIcon, CheckCircleIcon, ExclamationTriangleIco
 import { parseExcelToEvents, convertToCalendarEvents } from '@/lib/excel-parser';
 import { useCalendarStore } from '@/lib/store';
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
-import type { Event, ChurchCategory } from '@/types/calendar';
+import type { Event } from '@/types/calendar';
 import { CHURCH_CATEGORIES } from '@/lib/calendar-utils';
 
 interface ExcelUploadModalProps {
@@ -18,10 +17,11 @@ interface ExcelUploadModalProps {
 interface PreviewEvent extends Omit<Event, 'id' | 'createdAt' | 'updatedAt'> {
   tempId: string;
   selected: boolean;
+  isDuplicate?: boolean;
 }
 
 export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUploadModalProps) {
-  const { addEvent, events, deleteEvent, checkDuplicate } = useCalendarStore();
+  const { addEvent, events, checkDuplicate, deleteEvent } = useCalendarStore();
   const [isUploading, setIsUploading] = useState(false);
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'parsing' | 'importing' | 'preview' | 'success' | 'error'>('idle');
   const [previewEvents, setPreviewEvents] = useState<PreviewEvent[]>([]);
@@ -78,8 +78,8 @@ export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUp
       setPreviewEvents(previewData);
       setUploadStatus('preview');
 
-    } catch (error) {
-      setErrorMessage(error instanceof Error ? error.message : '파일 처리 중 오류가 발생했습니다.');
+    } catch {
+      setErrorMessage('파일 처리 중 오류가 발생했습니다.');
       setUploadStatus('error');
     } finally {
       setIsUploading(false);
@@ -100,19 +100,15 @@ export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUp
       setIsUploading(true);
       setUploadStatus('importing');
 
-      // 추가된 이벤트 ID 저장
-      const addedIds: string[] = [];
-
       // 선택된 이벤트만 데이터베이스에 추가
       for (const eventData of selectedEvents) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { tempId, selected, ...event } = eventData;
         // DB 저장용 날짜 조정 (하루 더하기)
         const adjustedDate = new Date(event.date);
         adjustedDate.setDate(adjustedDate.getDate() + 1);
         const adjustedEvent = { ...event, date: adjustedDate };
-        const result = await addEvent(adjustedEvent);
-        // addEvent가 ID를 반환하도록 수정 필요 - 임시로 로컬 이벤트를 활용
-        // 나중에 addEvent가 ID를 반환하도록 수정할 경우 사용
+        await addEvent(adjustedEvent);
       }
 
       // 최근 추가된 이벤트 추적 (현재 시간 기준으로)
@@ -135,7 +131,7 @@ export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUp
         resetModal();
       }, 2000);
 
-    } catch (error) {
+    } catch {
       setErrorMessage('일정 추가 중 오류가 발생했습니다.');
       setUploadStatus('error');
     } finally {
@@ -153,7 +149,7 @@ export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUp
     );
   };
 
-  const updateEventField = (tempId: string, field: string, value: any) => {
+  const updateEventField = (tempId: string, field: string, value: unknown) => {
     setPreviewEvents(prev =>
       prev.map(event =>
         event.tempId === tempId
@@ -442,7 +438,7 @@ export default function ExcelUploadModal({ isOpen, onClose, onSuccess }: ExcelUp
                     }
                     setRecentlyAddedIds([]);
                     setShowDeleteRecent(false);
-                  } catch (error) {
+                  } catch {
                     if (onSuccess) {
                       onSuccess('일정 삭제 중 오류가 발생했습니다.', 'error');
                     }
@@ -467,7 +463,7 @@ interface EventPreviewItemProps {
   onToggleSelection: () => void;
   onStartEdit: () => void;
   onStopEdit: () => void;
-  onUpdateField: (field: string, value: any) => void;
+  onUpdateField: (field: string, value: unknown) => void;
   onRemove: () => void;
 }
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import type { Event } from '@/types/calendar';
 import { getCategoryInfo, formatTime } from '@/lib/calendar-utils';
 import { ClockIcon, MapPinIcon, XMarkIcon, DocumentDuplicateIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
