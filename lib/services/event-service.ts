@@ -125,10 +125,10 @@ export class EventService {
   static async addEvent(eventData: Omit<Event, 'id' | 'createdAt' | 'updatedAt'>): Promise<Event> {
     const insertData = mapEventToDbInsert(eventData);
 
+    // @ts-ignore - Supabase types issue
     const { data, error } = await supabase
       .from('events')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .insert(insertData as any)
+      .insert(insertData)
       .select()
       .single();
 
@@ -144,10 +144,10 @@ export class EventService {
   static async updateEvent(id: string, eventData: Partial<Event>): Promise<Event> {
     const updateData = mapEventToDbUpdate(eventData);
 
+    // @ts-ignore - Supabase types issue
     const { data, error } = await supabase
       .from('events')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .update(updateData as any)
+      .update(updateData)
       .eq('id', id)
       .select()
       .single();
