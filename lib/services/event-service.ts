@@ -127,7 +127,7 @@ export class EventService {
 
     const { data, error } = await supabase
       .from('events')
-      .insert(insertData as any)
+      .insert(insertData as EventInsert)
       .select()
       .single();
 
