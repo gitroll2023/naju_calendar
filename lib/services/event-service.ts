@@ -145,7 +145,7 @@ export class EventService {
 
     const { data, error } = await supabase
       .from('events')
-      .update(updateData)
+      .update(updateData as never)
       .eq('id', id)
       .select()
       .single();
