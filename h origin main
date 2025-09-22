@@ -1,0 +1,5 @@
+[33m72f48c7[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Replace @ts-ignore with @ts-expect-error
+[33mdcf4350[m Fix TypeScript never type error with @ts-ignore
+[33md63315f[m Fix ESLint comment placement for any type assertions
+[33mb0dc9e0[m Fix ESLint no-explicit-any errors in event-service.ts
+[33md05e335[m Fix TypeScript errors in event-service.ts
