@@ -127,7 +127,7 @@ export class EventService {
 
     const { data, error } = await supabase
       .from('events')
-      .insert(insertData)
+      .insert(insertData as any)
       .select()
       .single();
 
@@ -145,7 +145,7 @@ export class EventService {
 
     const { data, error } = await supabase
       .from('events')
-      .update(updateData)
+      .update(updateData as any)
       .eq('id', id)
       .select()
       .single();
