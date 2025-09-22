@@ -125,7 +125,7 @@ export class EventService {
   static async addEvent(eventData: Omit<Event, 'id' | 'createdAt' | 'updatedAt'>): Promise<Event> {
     const insertData = mapEventToDbInsert(eventData);
 
-    // @ts-ignore - Supabase types issue
+    // @ts-expect-error - Supabase types issue with 'never' type
     const { data, error } = await supabase
       .from('events')
       .insert(insertData)
@@ -144,7 +144,7 @@ export class EventService {
   static async updateEvent(id: string, eventData: Partial<Event>): Promise<Event> {
     const updateData = mapEventToDbUpdate(eventData);
 
-    // @ts-ignore - Supabase types issue
+    // @ts-expect-error - Supabase types issue with 'never' type
     const { data, error } = await supabase
       .from('events')
       .update(updateData)
