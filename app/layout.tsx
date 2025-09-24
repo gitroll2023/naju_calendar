@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "나주교회 일정공유 캘린더",
-  description: "나주교회 성도들을 위한 교회 일정공유 모바일 캘린더 서비스",
+  title: "나주지역 일정공유 캘린더",
+  description: "나주지역 성도들을 위한 교회 일정공유 모바일 캘린더 서비스",
   manifest: "/manifest.json",
   themeColor: "#3B82F6",
   viewport: {
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  keywords: ["나주교회", "교회일정", "일정공유", "캘린더", "예배", "교회행사", "모바일"],
-  authors: [{ name: "나주교회" }],
+  keywords: ["나주지역", "교회일정", "일정공유", "캘린더", "예배", "교회행사", "모바일"],
+  authors: [{ name: "나주지역" }],
 };
 
 export default function RootLayout({

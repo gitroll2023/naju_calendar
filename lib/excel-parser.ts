@@ -407,7 +407,7 @@ export function parseExcelToEvents(file: File): Promise<ParsedEvent[]> {
                 date: date,  // 원본 날짜 그대로 사용
                 category,
                 description: `엑셀에서 가져온 일정`,
-                location: '나주교회',
+                location: '나주지역',
                 ...timeInfo
               });
 
@@ -455,7 +455,7 @@ export function parseExcelToEvents(file: File): Promise<ParsedEvent[]> {
                   date: date,  // 원본 날짜 그대로 사용
                   category,
                   description: `엑셀에서 가져온 일정`,
-                  location: '나주교회',
+                  location: '나주지역',
                   ...timeInfo
                 });
 

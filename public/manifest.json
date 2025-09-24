@@ -1,7 +1,7 @@
 {
-  "name": "나주교회 일정공유 캘린더",
-  "short_name": "나주교회",
-  "description": "나주교회 성도들을 위한 교회 일정공유 모바일 캘린더 서비스",
+  "name": "나주지역 일정공유 캘린더",
+  "short_name": "나주지역",
+  "description": "나주지역 성도들을 위한 교회 일정공유 모바일 캘린더 서비스",
   "theme_color": "#3B82F6",
   "background_color": "#FFFFFF",
   "display": "standalone",

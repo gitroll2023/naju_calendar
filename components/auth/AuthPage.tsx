@@ -83,7 +83,7 @@ export default function AuthPage({ onAuthSuccess }: AuthPageProps) {
             <CalendarDaysIcon className="w-10 h-10 text-blue-600" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            나주교회 일정관리
+            나주지역 일정관리
           </h1>
           <p className="text-gray-600">
             비밀번호를 입력하여 접속하세요

@@ -113,7 +113,7 @@ export default function CalendarHeader({ onExcelUpload, onDownloadCSV }: Calenda
         <div className="flex items-center justify-center py-2 bg-blue-600">
           <CalendarDaysIcon className="w-4 h-4 text-white mr-2" />
           <h1 className="text-white text-sm font-semibold">
-            나주교회 일정공유 캘린더 {format(currentDate, 'yyyy')}
+            나주지역 일정공유 캘린더 {format(currentDate, 'yyyy')}
           </h1>
         </div>
 

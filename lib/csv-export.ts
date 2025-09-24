@@ -101,5 +101,5 @@ export function generateCSVFilename(events: Event[]): string {
   const startStr = `${firstDate.getFullYear()}${String(firstDate.getMonth() + 1).padStart(2, '0')}${String(firstDate.getDate()).padStart(2, '0')}`;
   const endStr = `${lastDate.getFullYear()}${String(lastDate.getMonth() + 1).padStart(2, '0')}${String(lastDate.getDate()).padStart(2, '0')}`;
 
-  return `나주교회_일정_${startStr}_${endStr}.csv`;
+  return `나주지역_일정_${startStr}_${endStr}.csv`;
 }
